@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import Main from "@/layouts/Main.astro";
+import Layout from "@/layouts/Layout.astro";
+import Card from "@/components/Card.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = getSortedPosts(posts);
+---
+
+<Layout title={`Blog | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Blog" pageDesc="All the articles I've written.">
+    <ul>
+      {sortedPosts.map(data => <Card {...data} />)}
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

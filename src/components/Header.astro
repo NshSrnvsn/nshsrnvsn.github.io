@@ -44,9 +44,16 @@ const isActive = (path: string) => {
   >
     <a
       href="/"
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="absolute flex items-center gap-2 py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {SITE.title}
+      <img
+        id="site-logo"
+        src={`/${SITE.ogImage}`}
+        alt={SITE.title}
+        class="h-8 w-8 rounded-full object-cover sm:h-9 sm:w-9"
+        loading="lazy"
+      />
+      <span>{SITE.title}</span>
     </a>
     <nav
       id="nav-menu"
@@ -72,54 +79,40 @@ const isActive = (path: string) => {
         ]}
       >
         <li class="col-span-2">
-          <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-            Posts
+          <a href="/projects" class:list={{ "active-nav": isActive("/projects") }}>
+            Projects
           </a>
         </li>
         <li class="col-span-2">
-          <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-            Tags
+          <a href="/blog" class:list={{ "active-nav": isActive("/blog") }}>
+            Blog
           </a>
         </li>
         <li class="col-span-2">
-          <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-            About
+          <a href="/archives" class:list={{ "active-nav": isActive("/archives") }}>
+            Archives
           </a>
         </li>
         {
           SITE.showArchives && (
             <li class="col-span-2">
               <LinkButton
-                href="/archives"
+                href="/changelog"
                 class:list={[
                   "focus-outline flex justify-center p-3 sm:p-1",
                   {
-                    "active-nav [&>svg]:stroke-accent": isActive("/archives"),
+                    "active-nav [&>svg]:stroke-accent": isActive("/changelog"),
                   },
                 ]}
-                title="Archives"
-                aria-label="archives"
+                title="Changelog"
+                aria-label="changelog"
               >
                 <IconArchive class="hidden sm:inline-block" />
-                <span class="sm:sr-only">Archives</span>
+                <span class="sm:sr-only">Changelog</span>
               </LinkButton>
             </li>
           )
         }
-        <li class="col-span-1 flex items-center justify-center">
-          <LinkButton
-            href="/search"
-            class:list={[
-              "focus-outline flex p-3 sm:p-1",
-              { "[&>svg]:stroke-accent": isActive("/search") },
-            ]}
-            title="Search"
-            aria-label="search"
-          >
-            <IconSearch />
-            <span class="sr-only">Search</span>
-          </LinkButton>
-        </li>
         {
           SITE.lightAndDarkMode && (
             <li class="col-span-1 flex items-center justify-center">
@@ -140,6 +133,31 @@ const isActive = (path: string) => {
     </nav>
   </div>
 </header>
+
+<div
+  id="logo-modal"
+  class="fixed inset-0 z-40 hidden items-center justify-center bg-black/60"
+  role="dialog"
+  aria-modal="true"
+>
+  <div
+    class="mx-4 flex max-w-sm flex-col items-center gap-3 rounded-md bg-background p-6 text-center shadow-lg"
+  >
+    <button
+      id="logo-modal-close"
+      class="focus-outline ms-auto text-sm text-muted-foreground"
+      type="button"
+    >
+      Close
+    </button>
+    <img
+      src={`/${SITE.ogImage}`}
+      alt={SITE.title}
+      class="h-32 w-32 rounded-full object-cover"
+      loading="lazy"
+    />
+  </div>
+</div>
 
 <script>
   function toggleNav() {
@@ -162,8 +180,52 @@ const isActive = (path: string) => {
     });
   }
 
-  toggleNav();
+  function logoModal() {
+    const logo = document.querySelector("#site-logo");
+    const modal = document.querySelector("#logo-modal");
+    const closeBtn = document.querySelector("#logo-modal-close");
+
+    if (!logo || !modal || !closeBtn) return;
+
+    const openModal = () => {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    };
+
+    const closeModal = () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    };
+
+    logo.addEventListener("click", event => {
+      event.preventDefault();
+      openModal();
+    });
+
+    closeBtn.addEventListener("click", () => {
+      closeModal();
+    });
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+  }
+
+  function initHeader() {
+    toggleNav();
+    logoModal();
+  }
+
+  initHeader();
 
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", initHeader);
 </script>
