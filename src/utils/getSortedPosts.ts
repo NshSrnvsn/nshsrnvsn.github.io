@@ -3,9 +3,9 @@ import postFilter from "./postFilter";
 
 const getSortedPosts = <T extends "blog" | "projects">(
   posts: CollectionEntry<T>[]
-) => {
+): CollectionEntry<T>[] => {
   return posts
-    .filter(postFilter)
+    .filter(postFilter as any)
     .sort(
       (a, b) =>
         Math.floor(
@@ -14,7 +14,7 @@ const getSortedPosts = <T extends "blog" | "projects">(
         Math.floor(
           new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime() / 1000
         )
-    );
+    ) as CollectionEntry<T>[];
 };
 
 export default getSortedPosts;
