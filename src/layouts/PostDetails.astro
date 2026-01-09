@@ -96,18 +96,6 @@ const nextPost =
     </h1>
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      {author === SITE.author && (
-        <>
-          <span
-            aria-hidden="true"
-            class:list={[
-              "max-sm:hidden",
-              { hidden: !SITE.editPost.enabled || hideEditPost },
-            ]}>|</span
-          >
-          <EditPost {hideEditPost} {post} class="max-sm:hidden" />
-        </>
-      )}
     </div>
     <article
       id="article"
@@ -117,10 +105,6 @@ const nextPost =
     </article>
 
     <hr class="my-8 border-dashed" />
-
-    {author === SITE.author && (
-      <EditPost class="sm:hidden" {hideEditPost} {post} />
-    )}
 
     <BackToTopButton />
 
