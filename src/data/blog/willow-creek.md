@@ -31,15 +31,15 @@ As Maya pushed open the creaky door of the bakery, the bell above it let out a t
 
 Maya smiled. As always, her eyes drifted to his leg. He had a faint limp, barely noticeable unless you were looking for it. She always wondered what caused it, but never asked.
 
-“Just here for bread,” she said.
+“Just here for the bread,” she said.
 
 As Victor wraps a fresh loaf. Maya looked around the shop. It was the same quaint setup she had known for as long as she could remember. Nothing ever changed here.
 
 She remembered suddenly. Victor’s mother was supposed to visit this week.
 
-As Victor passed her the bread, Maya noticed an old photograph resting near the counter. which was on the back shelf before. It showed Victor as a boy, standing beside his mother. They were both smiling.
+As Victor passed her the bread, Maya noticed an old photograph resting near the counter, which was on the back shelf before. It showed Victor as a boy, standing beside his mother. They were both smiling.
 
-“Speaking of my mom,” Victor said, catching her gaze, “she’ll be arriving tomorrow afternoon.”
+“Speaking of my mom,” Victor said, catching her gaze, “She’ll be arriving tomorrow afternoon.”
 
 “How long is she staying?” Maya asked. “You should take her to see the fair. I’ve always loved the soft pretzels there.”
 
@@ -49,7 +49,7 @@ Another customer walked in.
 
 He wore a red leather jacket-quite odd for Willow Creek. His presence felt loud, even though he didn’t speak right away. His blue eyes scanned the shop before settling on Victor, then briefly on Maya. A strange shiver ran through her.
 
-“Hiya, Vic,” he said.
+“Hiya, Vic!” he said.
 
 Victor’s mood shifted immediately.
 
@@ -93,7 +93,7 @@ The giant birthmark. Noticeable from her side view mirror.
 
 Her breath caught. It was odd. Her younger brother had the same mark.
 
-She tried to calm herself, but her thoughts kept returning to Alex. His smile, just like Ethans. *Ethan would have looked just like Alex now. He would’ve loved traveling too*.
+She tried to calm herself, but her thoughts kept returning to Alex. His smile, just like Ethan's. *Ethan would have looked just like Alex now. He would’ve loved travelling too*.
 
 When she got home, she fixed Milo his food and pulled some leftover pasta from the fridge, dropping it onto her own plate. She flipped through the mail absentmindedly when her phone rang.
 
@@ -131,13 +131,13 @@ Maya’s pulse thundered. “What happened to him?”
 
 “He vanished,” Granny said. “The same week Victor broke his leg.”
 
-Maya froze. Victor’s limp.
+Maya froze. *Victor’s limp.*
 
 “Victor tried to stop him,” Granny whispered. “They always move on. Different names. Different faces. Same mark. Same eyes. They pass through towns quietly, borrowing familiarity.”
 
 Maya’s gaze slid to the door.
 
-A knock sounded followed by three slow taps. Milo growled.
+A knock sounded, followed by three slow taps. Milo growled.
 
 “Do not let him inside,” Granny said urgently. “They can’t cross unless invited.”
 
