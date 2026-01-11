@@ -24,4 +24,4 @@ const projects = await getCollection("projects");
 const sortedProjects = getSortedPosts<"projects">(projects);
 ---
 
-<PostDetails post={post} posts={sortedProjects} />
+<PostDetails post={post} posts={sortedProjects} collectionType="projects" />

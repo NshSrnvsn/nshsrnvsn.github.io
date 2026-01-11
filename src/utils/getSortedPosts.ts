@@ -4,16 +4,15 @@ import postFilter from "./postFilter";
 const getSortedPosts = <T extends "blog" | "projects">(
   posts: CollectionEntry<T>[]
 ): CollectionEntry<T>[] => {
+  const toTs = (d: string | number | Date | null | undefined) =>
+    d ? Math.floor(new Date(d).getTime() / 1000) : 0;
+
   return posts
     .filter(postFilter as any)
     .sort(
       (a, b) =>
-        Math.floor(
-          new Date(b.data.modDatetime ?? b.data.pubDatetime).getTime() / 1000
-        ) -
-        Math.floor(
-          new Date(a.data.modDatetime ?? a.data.pubDatetime).getTime() / 1000
-        )
+        toTs(b.data.modDatetime ?? (b.data as any).pubDatetime) -
+        toTs(a.data.modDatetime ?? (a.data as any).pubDatetime)
     ) as CollectionEntry<T>[];
 };
 

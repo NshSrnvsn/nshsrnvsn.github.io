@@ -8,24 +8,50 @@ type Props = {
   variant?: "h2" | "h3";
 } & (CollectionEntry<"blog"> | CollectionEntry<"projects">);
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { variant: Heading = "h2", id, data, filePath, collection } = Astro.props;
 
 const { title, description, ...props } = data;
+
+// Extract GitHub link only for projects to satisfy typing
+const githubLink = collection === "projects" ? (data as any).github : undefined;
+
+// Determine collection type from the collection property
+const collectionType = collection === "projects" ? "projects" : "blog";
 ---
 
-<li class="my-6">
-  <a
-    href={getPath(id, filePath)}
-    class:list={[
-      "inline-block text-lg font-medium text-accent",
-      "decoration-dashed underline-offset-4 hover:underline",
-      "focus-visible:no-underline focus-visible:underline-offset-0",
-    ]}
-  >
-    <Heading style={{ viewTransitionName: slugifyStr(title) }}>
-      {title}
-    </Heading>
-  </a>
-  <Datetime {...props} />
-  <p>{description}</p>
-</li>
+{collectionType === "projects" ? (
+  <li class="h-full">
+    <a
+      href={githubLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex flex-col border border-border rounded-lg p-6 hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-accent/10 hover:border-accent/30 transition-all duration-300 h-58 bg-background overflow-hidden"
+    >
+      <Heading style={{ viewTransitionName: slugifyStr(title) }} class="text-xl font-semibold text-accent mb-2">
+        {title}
+      </Heading>
+      <p class="text-foreground/80 min-w-0 break-words overflow-hidden">{description}</p>
+    </a>
+  </li>
+) : (
+  <li class="my-6">
+    <a
+      href={getPath(id, filePath, true, collectionType)}
+      class:list={[
+        "inline-block text-lg font-medium text-accent",
+        "decoration-dashed underline-offset-4 hover:underline",
+        "focus-visible:no-underline focus-visible:underline-offset-0",
+      ]}
+    >
+      <Heading style={{ viewTransitionName: slugifyStr(title) }}>
+        {title}
+      </Heading>
+    </a>
+    <Datetime
+      pubDatetime={(props.pubDatetime as Date)}
+      modDatetime={(props.modDatetime ?? null) as Date | null}
+      timezone={props.timezone}
+    />
+    <p>{description}</p>
+  </li>
+)}

@@ -5,7 +5,6 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
@@ -17,9 +16,10 @@ import { SITE } from "@/config";
 type Props = {
   post: CollectionEntry<"blog"> | CollectionEntry<"projects">;
   posts: CollectionEntry<"blog">[] | CollectionEntry<"projects">[];
+  collectionType?: "blog" | "projects";
 };
 
-const { post, posts } = Astro.props;
+const { post, posts, collectionType = "blog" } = Astro.props;
 
 const {
   title,
@@ -94,9 +94,16 @@ const nextPost =
     >
       {title}
     </h1>
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-    </div>
+    {collectionType === "blog" && (
+      <div class="my-2 flex items-center gap-2">
+        <Datetime
+          pubDatetime={(pubDatetime as Date)}
+          modDatetime={(modDatetime ?? null) as Date | null}
+          timezone={timezone}
+          size="lg"
+        />
+      </div>
+    )}
     <article
       id="article"
       class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
@@ -104,23 +111,23 @@ const nextPost =
       <Content />
     </article>
 
-    <hr class="my-8 border-dashed" />
+    {collectionType === "blog" && (
+      <div class="my-8 text-center text-foreground/70">---Fin---</div>
+    )}
 
     <BackToTopButton />
-
-    <ShareLinks />
 
     <!-- Previous/Next Post Buttons -->
     <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-8">
       {
         prevPost && (
           <a
-            href={getPath(prevPost.id, prevPost.filePath)}
+            href={getPath(prevPost.id, prevPost.filePath, true, collectionType)}
             class="flex w-full gap-1 hover:opacity-75"
           >
             <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
             <div>
-              <span>Previous Post</span>
+              <span>{collectionType === "projects" ? "Previous Project" : "Previous Post"}</span>
               <div class="text-sm text-accent/85">{prevPost.title}</div>
             </div>
           </a>
@@ -129,11 +136,11 @@ const nextPost =
       {
         nextPost && (
           <a
-            href={getPath(nextPost.id, nextPost.filePath)}
+            href={getPath(nextPost.id, nextPost.filePath, true, collectionType)}
             class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
           >
             <div>
-              <span>Next Post</span>
+              <span>{collectionType === "projects" ? "Next Project" : "Next Post"}</span>
               <div class="text-sm text-accent/85">{nextPost.title}</div>
             </div>
             <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
