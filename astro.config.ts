@@ -15,7 +15,7 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      filter: page => !page.includes("/archives") || SITE.showArchives,
     }),
   ],
   devToolbar: {
