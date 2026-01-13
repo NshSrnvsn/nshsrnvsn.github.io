@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import ArchivesLayout from "@/layouts/ArchivesLayout.astro";
+
+const travel = await getCollection("travel", ({ data }) => !data.draft);
+const reviews = await getCollection("reviews", ({ data }) => !data.draft);
+const paintings = await getCollection("paintings", ({ data }) => !data.draft);
+
+// Sort by date descending
+const sortByDate = (items: any[]) =>
+  items.sort(
+    (a, b) =>
+      new Date(b.data.pubDatetime).getTime() -
+      new Date(a.data.pubDatetime).getTime()
+  );
+---
+
+<ArchivesLayout
+  title="Archives"
+  travel={sortByDate(travel)}
+  reviews={sortByDate(reviews)}
+  paintings={sortByDate(paintings)}
+/>

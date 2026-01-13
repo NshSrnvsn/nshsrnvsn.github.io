@@ -6,11 +6,11 @@ interface GroupFunction<T> {
   (item: T, index?: number): GroupKey;
 }
 
-const getPostsByGroupCondition = (
-  posts: CollectionEntry<"blog">[],
-  groupFunction: GroupFunction<CollectionEntry<"blog">>
+const getPostsByGroupCondition = <C extends "blog" | "log">(
+  posts: CollectionEntry<C>[],
+  groupFunction: GroupFunction<CollectionEntry<C>>
 ) => {
-  const result: Record<GroupKey, CollectionEntry<"blog">[]> = {};
+  const result: Record<GroupKey, CollectionEntry<C>[]> = {};
   for (let i = 0; i < posts.length; i++) {
     const item = posts[i];
     const groupKey = groupFunction(item, i);

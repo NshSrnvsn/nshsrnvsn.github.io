@@ -1,0 +1,91 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import BackButton from "@/components/BackButton.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { render } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import { SITE } from "@/config";
+
+type Props = {
+  entry: CollectionEntry<"travel">;
+};
+
+export async function getStaticPaths() {
+  const travel = await getCollection("travel", ({ data }) => !data.draft);
+  return travel.map((entry) => ({
+    params: { slug: entry.id.split("/").pop() },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Get sorted list for prev/next
+const allTravel = await getCollection("travel", ({ data }) => !data.draft);
+const sorted = allTravel.sort(
+  (a, b) =>
+    new Date(b.data.pubDatetime).getTime() -
+    new Date(a.data.pubDatetime).getTime()
+);
+
+const currentIndex = sorted.findIndex((t) => t.id === entry.id);
+const prevEntry = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const nextEntry = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+
+const layoutProps = {
+  title: `${entry.data.title} | ${SITE.title}`,
+  description: entry.data.description,
+  scrollSmooth: true,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <Breadcrumb />
+  <BackButton />
+  <main id="main-content" class="app-layout pb-12">
+    <h1 class="text-2xl font-bold text-accent sm:text-3xl mb-2">
+      {entry.data.title}
+    </h1>
+    <p class="text-sm text-foreground/70 mb-8">
+      {new Date(entry.data.pubDatetime).toLocaleDateString()}
+    </p>
+
+    <article class="prose dark:prose-invert max-w-none mb-8">
+      <Content />
+    </article>
+
+    <!-- Next/Previous Navigation -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-12 pt-8 border-t border-border">
+      {prevEntry && (
+        <a
+          href={`/travel/${prevEntry.id.split("/").pop()}`}
+          class="flex gap-2 p-4 rounded-lg border border-border hover:border-accent transition"
+        >
+          <span class="text-accent">←</span>
+          <div>
+            <span class="text-sm text-foreground/70">Previous</span>
+            <div class="font-semibold text-accent">{prevEntry.data.title}</div>
+          </div>
+        </a>
+      )}
+      {nextEntry && (
+        <a
+          href={`/travel/${nextEntry.id.split("/").pop()}`}
+          class="flex gap-2 p-4 rounded-lg border border-border hover:border-accent transition text-end sm:col-start-2 sm:justify-end"
+        >
+          <div>
+            <span class="text-sm text-foreground/70">Next</span>
+            <div class="font-semibold text-accent">{nextEntry.data.title}</div>
+          </div>
+          <span class="text-accent">→</span>
+        </a>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>

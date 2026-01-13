@@ -13,7 +13,7 @@ if (!SITE.showArchives) {
   return Astro.redirect("/404");
 }
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getCollection("log", ({ data }) => !data.draft);
 
 const months = [
   "January",
@@ -31,9 +31,9 @@ const months = [
 ];
 ---
 
-<Layout title={`Changelog | ${SITE.title}`}>
+<Layout title={`Log | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Changelog" pageDesc="All the articles I've archived.">
+  <Main pageTitle="Log" pageDesc="Recent updates from my life">
     {
       Object.entries(
         getPostsByGroupCondition(posts, post =>

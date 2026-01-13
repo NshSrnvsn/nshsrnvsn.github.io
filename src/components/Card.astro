@@ -6,7 +6,7 @@ import Datetime from "./Datetime.astro";
 
 type Props = {
   variant?: "h2" | "h3";
-} & (CollectionEntry<"blog"> | CollectionEntry<"projects">);
+} & (CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"log">);
 
 const { variant: Heading = "h2", id, data, filePath, collection } = Astro.props;
 
@@ -16,7 +16,7 @@ const { title, description, ...props } = data;
 const githubLink = collection === "projects" ? (data as any).github : undefined;
 
 // Determine collection type from the collection property
-const collectionType = collection === "projects" ? "projects" : "blog";
+const collectionType = collection === "projects" ? "projects" : collection === "log" ? "log" : "blog";
 ---
 
 {collectionType === "projects" ? (

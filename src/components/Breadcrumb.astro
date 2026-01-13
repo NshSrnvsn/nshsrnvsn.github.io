@@ -6,6 +6,12 @@ const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 // eg: /blog/tailwindcss => ['blog', 'tailwindcss']
 const breadcrumbList = currentUrlPath.split("/").slice(1);
 
+// Map to store custom links
+const customLinks: Record<string, string> = {
+  "Travel Stories": "/archives",
+  "Reviews": "/archives",
+};
+
 // if breadcrumb is Home > Projects > 1 <etc>
 // remove page numbers for Projects
 if (breadcrumbList[0] === "projects") {
@@ -20,6 +26,18 @@ if (breadcrumbList[0] === "blog" && !isNaN(Number(breadcrumbList[2]))) {
     3,
     `${breadcrumbList[1]} ${Number(breadcrumbList[2]) === 1 ? "" : "(page " + breadcrumbList[2] + ")"}`
   );
+}
+
+// if breadcrumb is Home > Travel > [slug]
+// replace with Travel Stories
+if (breadcrumbList[0] === "travel" && breadcrumbList.length === 2) {
+  breadcrumbList.splice(0, 1, "Travel Stories");
+}
+
+// if breadcrumb is Home > Reviews > [slug]
+// replace with Reviews
+if (breadcrumbList[0] === "reviews" && breadcrumbList.length === 2) {
+  breadcrumbList.splice(0, 1, "Reviews");
 }
 ---
 
@@ -45,7 +63,10 @@ if (breadcrumbList[0] === "blog" && !isNaN(Number(breadcrumbList[2]))) {
           </li>
         ) : (
           <li>
-            <a href={`/${breadcrumb}/`} class="capitalize opacity-70">
+            <a 
+              href={customLinks[breadcrumb] || `/${breadcrumb}/`} 
+              class="capitalize opacity-70"
+            >
               {breadcrumb}
             </a>
             <span aria-hidden="true">&raquo;</span>

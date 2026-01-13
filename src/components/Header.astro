@@ -97,18 +97,18 @@ const isActive = (path: string) => {
           SITE.showArchives && (
             <li class="col-span-2">
               <LinkButton
-                href="/changelog"
+                href="/log"
                 class:list={[
                   "focus-outline flex justify-center p-3 sm:p-1",
                   {
-                    "active-nav [&>svg]:stroke-accent": isActive("/changelog"),
+                    "active-nav [&>svg]:stroke-accent": isActive("/log"),
                   },
                 ]}
-                title="Changelog"
-                aria-label="changelog"
+                title="Log"
+                aria-label="log"
               >
                 <IconArchive class="hidden sm:inline-block" />
-                <span class="sm:sr-only">Changelog</span>
+                <span class="sm:sr-only">Log</span>
               </LinkButton>
             </li>
           )

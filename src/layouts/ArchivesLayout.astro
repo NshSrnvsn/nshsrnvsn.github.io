@@ -1,0 +1,142 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { SITE } from "@/config";
+
+interface Props {
+  title: string;
+  travel: CollectionEntry<"travel">[];
+  reviews: CollectionEntry<"reviews">[];
+  paintings: CollectionEntry<"paintings">[];
+}
+
+const { title, travel, reviews, paintings } = Astro.props;
+
+const layoutProps = {
+  title: `${title} | ${SITE.title}`,
+  description: "Archives: Travel stories, reviews, and paintings",
+  scrollSmooth: true,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <Breadcrumb />
+  <main id="main-content" class="app-layout pb-12">
+    <h1 class="inline-block text-2xl font-bold text-foreground sm:text-3xl mb-8">
+      {title}
+    </h1>
+
+    <!-- Travel Stories Section -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-foreground mb-6">Travel</h2>
+      <ul class="space-y-4">
+        {travel.map((entry) => (
+          <li class="border-b border-border pb-4">
+            <a href={`/travel/${entry.id.split("/").pop()}`} class="block hover:opacity-75 transition">
+              <h3 class="text-lg font-semibold text-accent mb-1">{entry.data.title}</h3>
+              <p class="text-sm text-foreground/70 mb-2">
+                {new Date(entry.data.pubDatetime).toLocaleDateString()}
+              </p>
+              <p class="text-foreground/80">{entry.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-foreground mb-6">Reviews</h2>
+      <ul class="space-y-4">
+        {reviews.map((entry) => (
+          <li class="border-b border-border pb-4">
+            <a href={`/reviews/${entry.id.split("/").pop()}`} class="block hover:opacity-75 transition">
+              <div class="flex items-start justify-between mb-1">
+                <h3 class="text-lg font-semibold text-accent">{entry.data.title}</h3>
+                {entry.data.rating && (
+                  <span class="text-yellow-500 text-lg">★ {entry.data.rating}</span>
+                )}
+              </div>
+              <p class="text-sm text-foreground/70 mb-2">
+                {new Date(entry.data.pubDatetime).toLocaleDateString()}
+              </p>
+              <p class="text-foreground/80">{entry.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Paintings Section -->
+    <section>
+      <h2 class="text-2xl font-semibold text-foreground mb-6">Paintings</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {paintings.map((entry) => (
+          <div 
+            class="border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer painting-card"
+            data-image={typeof entry.data.image === "string" ? entry.data.image : entry.data.image.src}
+          >
+            <img
+              src={typeof entry.data.image === "string" ? entry.data.image : entry.data.image.src}
+              alt={entry.data.title || "Painting"}
+              class="w-full h-64 object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="painting-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div class="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
+        <img id="modal-image" src="" alt="Painting" class="max-w-full max-h-[90vh] object-contain" />
+        <button 
+          id="modal-close" 
+          class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/75 rounded-full p-2 transition"
+          aria-label="Close modal"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script is:inline>
+      const modal = document.getElementById("painting-modal");
+      const modalImage = document.getElementById("modal-image");
+      const modalClose = document.getElementById("modal-close");
+      const paintingCards = document.querySelectorAll(".painting-card");
+
+      paintingCards.forEach(card => {
+        card.addEventListener("click", () => {
+          const imageSrc = card.dataset.image;
+          modalImage.src = imageSrc;
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      const closeModal = () => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      };
+
+      modalClose.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+          closeModal();
+        }
+      });
+    </script>
+  </main>
+  <Footer />
+</Layout>

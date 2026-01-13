@@ -1,4 +1,4 @@
-import { BLOG_PATH, PROJECTS_PATH } from "@/content.config";
+import { BLOG_PATH, PROJECTS_PATH, LOG_PATH } from "@/content.config";
 import { slugifyStr } from "./slugify";
 
 /**
@@ -13,9 +13,9 @@ export function getPath(
   id: string,
   filePath: string | undefined,
   includeBase = true,
-  type: "blog" | "projects" = "blog"
+  type: "blog" | "projects" | "log" = "blog"
 ) {
-  const basePath = type === "projects" ? PROJECTS_PATH : BLOG_PATH;
+  const basePath = type === "projects" ? PROJECTS_PATH : type === "log" ? LOG_PATH : BLOG_PATH;
   
   const pathSegments = filePath
     ?.replace(basePath, "")
@@ -25,7 +25,13 @@ export function getPath(
     .slice(0, -1) // remove the last segment_ file name_ since it's unnecessary
     .map(segment => slugifyStr(segment)); // slugify each segment path
 
-  const pathPrefix = includeBase ? (type === "projects" ? "/projects" : "/blog") : "";
+  const pathPrefix = includeBase
+    ? type === "projects"
+      ? "/projects"
+      : type === "log"
+      ? "/log"
+      : "/blog"
+    : "";
 
   // Making sure `id` does not contain the directory
   const blogId = id.split("/");
