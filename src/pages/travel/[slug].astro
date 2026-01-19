@@ -59,8 +59,10 @@ const layoutProps = {
       <Content />
     </article>
 
+    <div class="my-8 text-center text-foreground/70">---Fin---</div>
+
     <!-- Next/Previous Navigation -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-12 pt-8 border-t border-border">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-12">
       {prevEntry && (
         <a
           href={`/travel/${prevEntry.id.split("/").pop()}`}

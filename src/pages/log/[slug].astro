@@ -1,0 +1,122 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import BackButton from "@/components/BackButton.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { render } from "astro:content";
+import { SITE } from "@/config";
+import Datetime from "@/components/Datetime.astro";
+import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
+import { getPath } from "@/utils/getPath";
+import { slugifyStr } from "@/utils/slugify";
+import BackToTopButton from "@/components/BackToTopButton.astro";
+
+type Props = {
+  entry: CollectionEntry<"log">;
+};
+
+export async function getStaticPaths() {
+  const log = await getCollection("log", ({ data }) => !data.draft);
+  return log.map((entry) => ({
+    params: { slug: entry.id.split("/").pop() },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Get sorted list for prev/next
+const allLog = await getCollection("log", ({ data }) => !data.draft);
+const sorted = allLog.sort(
+  (a, b) =>
+    new Date(b.data.pubDatetime).getTime() -
+    new Date(a.data.pubDatetime).getTime()
+);
+
+const currentIndex = sorted.findIndex((l) => l.id === entry.id);
+const prevEntry = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const nextEntry = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+
+const layoutProps = {
+  title: `${entry.data.title} | ${SITE.title}`,
+  description: entry.data.description,
+  scrollSmooth: true,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <Breadcrumb />
+  <BackButton />
+  <main
+    id="main-content"
+    class:list={["app-layout pb-12", { "mt-8": !SITE.showBackButton }]}
+    data-pagefind-body
+  >
+    <h1
+      transition:name={slugifyStr(entry.data.title)}
+      class="inline-block text-2xl font-bold text-accent sm:text-3xl"
+    >
+      {entry.data.title}
+    </h1>
+    <div class="my-2 flex items-center gap-2">
+      <Datetime
+        pubDatetime={(entry.data.pubDatetime as Date)}
+        modDatetime={(entry.data.modDatetime ?? null) as Date | null}
+        timezone={entry.data.timezone}
+        size="lg"
+      />
+    </div>
+    <article
+      id="article"
+      class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+    >
+      <Content />
+    </article>
+
+    <div class="my-8 text-center text-foreground/70">---Fin---</div>
+
+    <BackToTopButton />
+
+    <!-- Previous/Next Post Buttons -->
+    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-8">
+      {
+        prevEntry && (
+          <a
+            href={getPath(prevEntry.id, prevEntry.filePath, true, "log")}
+            class="flex w-full gap-1 hover:opacity-75"
+          >
+            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
+            <div>
+              <span>Previous Entry</span>
+              <div class="text-sm text-accent/85">{prevEntry.data.title}</div>
+            </div>
+          </a>
+        )
+      }
+      {
+        nextEntry && (
+          <a
+            href={getPath(nextEntry.id, nextEntry.filePath, true, "log")}
+            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+          >
+            <div>
+              <span>Next Entry</span>
+              <div class="text-sm text-accent/85">{nextEntry.data.title}</div>
+            </div>
+            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
+          </a>
+        )
+      }
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline>
+  sessionStorage.setItem('backUrl', '/log');
+</script>
