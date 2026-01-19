@@ -21,11 +21,11 @@ description:
   </figcaption>
 </figure>
 
-Maya trudged down Main Street, her eyes fixed on the pavement as she dodged a group of chattering tourists. It was just another ordinary day in Willow Creek, where nothing ever changed and everyone knew each other’s business, including hers.
+Maya hurried down Main Street toward Victor's, her eyes fixed on the pavement as she dodged a group of chattering tourists. It was just another ordinary day in Willow Creek, where nothing ever changed and everyone knew each other's business, including hers.
 
-She realised she was out of bread that morning and groaned. It meant leaving the warmth of her cozy home, which she really didn’t feel like doing. Still, she didn’t mind it too much. Running out of bread meant only one thing-a visit to Victor’s. And she liked Victor’s shop. It always smelled divine and Victor was like an older brother to her. 
+She realised she was out of bread that morning and had groaned. It meant leaving the warmth of her cozy home, which she really didn’t feel like doing. Still, she didn’t mind it too much. Running out of bread meant only one thing-a visit to Victor’s. And she liked Victor’s shop. It always smelled divine and Victor was like an older brother to her. 
 
-As Maya pushed open the creaky door of the bakery, the bell above it let out a tired clang, announcing her arrival. Victor stood in the corner rearranging a display of vintage kitchenware. The aroma of freshly baked bread drifted through the air, mixing with the smell of old books and dust that clung to everything in Willow Creek.
+As Maya pushed open the creaky door of the bakery, the bell above it let out a tired clang, announcing her arrival. Victor stood in the corner rearranging a display of vintage kitchenware. The aroma of freshly baked bread drifted through the air, mixing with the smell of strong coffee - the familiar comfort of his shop.
 
 “Hello, dear,” Victor said. “You’ve left your home early today. How has it been going?”
 
@@ -33,7 +33,7 @@ Maya smiled. As always, her eyes drifted to his leg. He had a faint limp, barely
 
 “Just here for the bread,” she said.
 
-As Victor wraps a fresh loaf. Maya looked around the shop. It was the same quaint setup she had known for as long as she could remember. Nothing ever changed here.
+As Victor wrapped a fresh loaf, Maya looked around the shop. It was the same quaint setup she had known for as long as she could remember. Nothing ever changed here.
 
 She remembered suddenly. Victor’s mother was supposed to visit this week.
 
@@ -51,11 +51,11 @@ He wore a red leather jacket-quite odd for Willow Creek. His presence felt loud,
 
 “Hiya, Vic!” he said.
 
-Victor’s mood shifted immediately.
+Victor's face brightened immediately.
 
-“It’s been a while,” Victor said excitedly. “Where was your last journey to? I hope Willow Creek treats you kinder this time.”
+“It’s been a while,” Victor said excitedly. “Where was your last journey to? I hope Willow Creek treats you well this time.”
 
-He glanced at Maya. “This is Alex. He travels a lot. He drops by every time he ends a trip. Likes my bread a little too much, I think.” and winks
+He glanced at Maya. "This is Alex. He travels a lot. He drops by every time he ends a trip. Likes my bread a little too much, I think." and winked
 
 Alex smiled. His eyes lingered on Maya slightly longer than necessary.
 
@@ -97,7 +97,7 @@ She tried to calm herself, but her thoughts kept returning to Alex. His smile, j
 
 When she got home, she fixed Milo his food and pulled some leftover pasta from the fridge, dropping it onto her own plate. She flipped through the mail absentmindedly when her phone rang.
 
-“Hello, Granny!” she said, suddenly cheerful.
+"Hello, Granny!" she said, forcing brightness into her voice.
 
 “How was your day?” Granny asked.
 
