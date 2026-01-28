@@ -44,6 +44,10 @@ const projects = defineCollection({
       hideEditPost: z.boolean().optional(),
       timezone: z.string().optional(),
       github: z.string(),
+      stars: z.number().optional(),
+      forks: z.number().optional(),
+      license: z.string().optional(),
+      readmeLink: z.string().optional(),
     }),
 });
 

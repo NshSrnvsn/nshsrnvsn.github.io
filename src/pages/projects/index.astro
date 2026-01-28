@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import Card from "@/components/Card.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
@@ -14,9 +14,9 @@ const sortedProjects = getSortedPosts(projects);
 
 <Layout title={`Projects | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Projects" pageDesc="All the projects I've worked on.">
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
-      {sortedProjects.map(data => <Card {...data} />)}
+  <Main pageTitle="Projects" pageDesc="Some Things I've Built">
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedProjects.map(project => <ProjectCard {...project} />)}
     </ul>
   </Main>
   <Footer />
