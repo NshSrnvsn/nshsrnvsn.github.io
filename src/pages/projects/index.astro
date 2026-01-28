@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
@@ -9,7 +9,7 @@ import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 const projects = await getCollection("projects", ({ data }) => !data.draft);
-const sortedProjects = getSortedPosts(projects);
+const sortedProjects = getSortedPosts<"projects">(projects);
 ---
 
 <Layout title={`Projects | ${SITE.title}`}>
