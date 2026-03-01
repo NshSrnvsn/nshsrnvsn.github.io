@@ -1,0 +1,328 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{fontawesome}
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkClass\ (\hmwkClassInstructor\ \hmwkClassTime): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Spring 2026 %\arabic{homeworkProblemCounter}
+}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>0
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework 1}
+\newcommand{\hmwkDueDate}{Thursday, January 29, 11:59pm via Gradescope.} %Late submission with $10\%$ penalty until Wednesday, January 24, 11:59pm.}
+\newcommand{\hmwkClass}{CS 6515}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{G. Brito}
+\newcommand{\hmwkAuthorName}{Your Name Here}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{center}
+\underline{\textbf{Instructions.}}
+\end{center}
+
+\noindent \texttt{For the graded problems, when asked to design an algorithm you must describe it in plain English. Do not use pseudocode! Your solution must include:
+\begin{itemize}
+    \item A description of your {\it divide step:} how many subproblems you have, what are the input of those? What is the criteria to recurse? 
+    \item A description of your {\it conquering step:} how do you get your solution from the subproblems? What extra work do you need to perform?
+    \item The {\it base case:} what rule stops your algorithm from recursing forever?
+    \item The runtime (in big-O notation) of your design. You must justify your answer, and you may use The Master Theorem if you wish. Fastest (and correct) algorithms are worth more credit.
+\end{itemize}
+}
+
+\begin{center}
+\underline{\textbf{Suggested reading.}}
+\end{center}
+
+\texttt{From Algorithms by Dasgupta, Papadumitriou, and Vazirani, ([DPV] from now on) chpater 2.2 covers Recurrence Relations and The Master theorem, chapter 2.6 covers FFT. Chapter 2.3 covers MergeSort, which will be useful in this assignment.}
+
+\vspace{1cm}
+
+
+\begin{center}
+ \faHandODown \faHandODown \faHandODown \\
+Type your solutions in $\LaTeX$ or your favorite editor. Handwritten responses won't be accepted.\\
+   \faHandOUp \faHandOUp \faHandOUp
+\end{center}
+
+
+\pagebreak
+
+
+\begin{homeworkProblem}
+A school maintains two lists of student IDs:
+
+\begin{itemize}
+    \item \textbf{List A:} IDs of all students currently enrolled in extracurricular clubs (size $n$).
+    \item \textbf{List B:} IDs of students who have graduated (size $m$).
+\end{itemize}
+
+\noindent
+The school wants to update the club lists by removing any students who have graduated. Design an efficient algorithm to produce a new list of students who are still active in clubs.\\
+
+{\it Hint: you can use {\tt MergeSort} as a black-box.}
+
+\subsection{Answer}
+\textbf{Divide Step:}
+The algorithm creates two subproblems by recursively sorting each input list:
+
+\begin{itemize}
+    \item First subproblem: Sort list A (enrolled students) using MergeSort 
+    \item Second subproblem: Sort list B (graduated students) using MergeSort
+\end{itemize}
+
+These are independent sorting operations whose input are unsorted List A and List B respectively. The criteria to recurse is inherent to MergeSort i.e we recurse as long as the list being sorted has more than one element.
+
+\textbf{Conquer Step:}
+Once both lists are sorted, we merge the results by performing a two-pointer linear scan:
+
+\begin{itemize}
+    \item Initialize two pointers: one at the start of sorted list A, one at the start of sorted list B
+    \item Initialize an empty result list
+    \item Compare the student IDs at both pointers:
+        \begin{itemize}
+            \item If A's current ID equals B's current ID, this student has graduated, so skip them (advance both pointers)
+            \item If A's current ID is less than B's current ID, this student is still active, so add them to the result list and advance A's pointer
+            \item If A's current ID is greater than B's current ID, advance B's pointer (this graduated student wasn't in clubs)
+        \end{itemize}
+    \item Continue until we've processed all of list A
+    \item Any remaining students in A who haven't been checked are added to the result list
+\end{itemize}
+
+The extra work needed is this single linear pass through both sorted lists, which takes O(n + m) time. \newline
+
+
+\textbf{Base Case:}
+The base case comes from MergeSort: when a list has only one element (or is empty), it is already sorted and we return it immediately without further recursion. \newline
+
+\textbf{Runtime Analysis:}
+Let's analyze each component:
+
+\begin{itemize}
+    \item Sorting list A: O(n log n) using MergeSort
+    \item Sorting list B: O(m log m) using MergeSort
+    \item Merging step: O(n + m) for the two-pointer scan
+\end{itemize}
+
+\textbf{Total runtime}: O(n log n + m log m)
+
+\textbf{Justification}: The dominant terms are the two sorting operations. The linear merge is absorbed by the sorting costs since n log n grows faster than n for n > 1. We cannot use the Master Theorem here because this isn't a single divide-and-conquer recurrence—we're combining two separate sorting operations followed by a linear merge. The overall complexity is the sum of sorting both lists.
+
+If n and m are comparable in size, we can express this as O((n + m) log(n + m)) as an upper bound, but the more precise analysis is O(n log n + m log m).
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+You are given an array $A$ of $n$ distinct integers. You are also given the fact that there are exactly $k$ local maxima in this array. Devise an algorithm to find the global maxima of the array in $O(k*\log n)$ time. \textcolor{red}{Removed.}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    You are given $n$ polynomials $p_1, p_2,\ldots, p_n$, each of degree at most $d$. Design an efficient algorithm to compute the product $p_1p_2\ldots p_n$.
+
+\subsection{Answer}
+\textbf{Divide Step:}
+We divide the n polynomials into two subproblems:
+
+\begin{itemize}
+    \item Left subproblem: Compute the product of the first half of polynomials: $p_1, p_2,\ldots, p_{n/2}$
+    \item Right subproblem: Compute the product of the second half of polynomials: $p_{n/2+1}, \ldots, p_n$
+\end{itemize}
+
+The input to each subproblem is half the number of polynomials. The criteria to recurse is that we have more than one polynomial to multiply. \\
+
+\textbf{Conquer Step:}
+After recursively computing:
+
+\begin{itemize}
+    \item Left result: L(x) = $p_1, p_2,\ldots, p_{n/2}$ (a polynomial of degree at most d·n/2)
+    \item Right result: R(x) = $p_{n/2+1}, \ldots, p_n$ (a polynomial of degree at most d·n/2)
+\end{itemize}
+
+We need to compute their product: L(x) · R(x)
+The extra work needed is multiplying two polynomials using the Fast Fourier Transform (FFT):
+
+\begin{itemize}
+    \item $L(x)$ has degree at most $d \cdot n/2$
+    \item $R(x)$ has degree at most $d \cdot n/2$
+    \item Their product has degree at most $d \cdot n$
+    \item Using FFT, we can multiply these two polynomials in $O(dn \log(dn))$ time
+\end{itemize}
+
+\textbf{Base Case:}
+When we have only one polynomial (n = 1):
+
+\begin{itemize}
+    \item Simply return that polynomial $p_1$
+    \item No computation needed: O(1) time
+\end{itemize}
+
+\textbf{Runtime Analysis:}
+Let T(n) be the time to multiply n polynomials, each of degree at most d. 
+
+\textbf{Recurrence relation:} $T(n) = 2T(n/2) + O(dn \log(dn))$
+
+At each level of recursion:
+
+\begin{itemize}
+    \item We split into 2 subproblems of size $n/2$
+    \item The conquer step multiplies two polynomials of degree $\approx d \cdot n/2$ each, which costs $O(dn\log(dn))$ using FFT
+\end{itemize}
+\textbf{Using the Master Theorem:}
+
+We have: $T(n) = 2T(n/2) + f(n)$ where $f(n) = O(dn \log(dn))$
+
+Compare $n^{\log_2 2} = n^1 = n$ with $f(n) = dn \log(dn)$
+
+Since $dn \log(dn)$ is larger than just $n$ (grows as $n \log n$), we're in Case 3 of the Master Theorem.
+
+However, we need to be more careful here...
+
+\textbf{More careful analysis:}
+Actually, the recurrence is more precisely:
+
+At the root level: we multiply two polynomials of degree $\approx dn/2$ each $\rightarrow O(dn \log(dn))$
+
+At the next level: we have 2 problems, each multiplying polynomials of degree $\approx dn/4 \rightarrow 2 \cdot O(dn/2 \log(dn/2)) = O(dn \log(dn))$
+
+At each of $\log n$ levels: total work is $O(dn \log(dn))$
+
+\textbf{Total runtime:} $O(dn \log(dn) \cdot \log n) = O(dn \log n \log(dn))$
+
+Since $d$ is constant with respect to $n$, we can also write this as $O(dn \log^2 n)$ when $d$ is fixed.
+
+    
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Georgia Tech is upgrading Wi-Fi along Techwood Drive, modeled as a straight line. There are $n$ dorms at integer mile-markers $P = [p_1, p_2, \dots, p_n]$ (not necessarily sorted). You may install at most $k$ identical routers. Each router can be placed \emph{anywhere on the line} (not necessarily at a dorm) and covers all dorms within distance $r$ of its location. That is, a router at position $x$ covers every dorm $p_i$ with $|p_i - x| \le r$.
+\\
+
+\noindent Design an efficient divide-and-conquer algorithm to \emph{minimize the necessary coverage radius $r$} so that all dorms are covered using at most $k$ routers.
+\end{homeworkProblem}
+\end{document}
