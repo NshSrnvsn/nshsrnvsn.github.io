@@ -6,6 +6,7 @@ export const BLOG_PATH = "src/data/blog";
 export const PROJECTS_PATH = "src/data/projects";
 export const TRAVEL_PATH = "src/data/travel";
 export const REVIEWS_PATH = "src/data/reviews";
+export const RECIPES_PATH = "src/data/recipes";
 export const PAINTINGS_PATH = "src/data/paintings";
 export const LOG_PATH = "src/data/log";
 
@@ -80,6 +81,23 @@ const reviews = defineCollection({
     }),
 });
 
+const recipes = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.md", base: `./${RECIPES_PATH}` }),
+  schema: ({ image }) =>
+    z.object({
+      author: z.string().default(SITE.author),
+      title: z.string(),
+      pubDatetime: z.date(),
+      modDatetime: z.date().optional().nullable(),
+      description: z.string(),
+      prepTime: z.string().optional(),
+      cookTime: z.string().optional(),
+      servings: z.string().optional(),
+      draft: z.boolean().optional(),
+      ogImage: image().or(z.string()).optional(),
+    }),
+});
+
 const paintings = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: `./${PAINTINGS_PATH}` }),
   schema: ({ image }) =>
@@ -111,4 +129,4 @@ const log = defineCollection({
     }),
 });
 
-export const collections = { blog, projects, travel, reviews, paintings, log };
+export const collections = { blog, projects, travel, reviews, recipes, paintings, log };

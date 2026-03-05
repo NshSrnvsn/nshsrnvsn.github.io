@@ -1,0 +1,125 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import BackButton from "@/components/BackButton.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { render } from "astro:content";
+import { SITE } from "@/config";
+
+type Props = {
+  entry: CollectionEntry<"recipes">;
+};
+
+export async function getStaticPaths() {
+  const recipes = await getCollection("recipes", ({ data }) => !data.draft);
+  return recipes.map((entry) => ({
+    params: { slug: entry.id.split("/").pop() },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Get sorted list for prev/next
+const allRecipes = await getCollection("recipes", ({ data }) => !data.draft);
+const sorted = allRecipes.sort(
+  (a, b) =>
+    new Date(b.data.pubDatetime).getTime() -
+    new Date(a.data.pubDatetime).getTime()
+);
+
+const currentIndex = sorted.findIndex((r) => r.id === entry.id);
+const prevEntry = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+const nextEntry = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+
+const layoutProps = {
+  title: `${entry.data.title} | ${SITE.title}`,
+  description: entry.data.description,
+  scrollSmooth: true,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <Breadcrumb />
+  <BackButton />
+  <main id="main-content" class="app-layout pb-12">
+    <h1 class="text-2xl font-bold text-accent sm:text-3xl mb-2">
+      {entry.data.title}
+    </h1>
+    
+    <!-- Recipe meta info -->
+    <div class="flex flex-wrap gap-4 text-sm text-foreground/70 mb-4">
+      {entry.data.prepTime && (
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Prep: {entry.data.prepTime}
+        </span>
+      )}
+      {entry.data.cookTime && (
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+          </svg>
+          Cook: {entry.data.cookTime}
+        </span>
+      )}
+      {entry.data.servings && (
+        <span class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          Servings: {entry.data.servings}
+        </span>
+      )}
+    </div>
+    
+    <p class="text-sm text-foreground/70 mb-8">
+      {new Date(entry.data.pubDatetime).toLocaleDateString()}
+    </p>
+
+    <article class="prose dark:prose-invert max-w-none mb-8">
+      <Content />
+    </article>
+
+    <div class="my-8 text-center text-foreground/70">---Fin---</div>
+
+    <!-- Next/Previous Navigation -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-12">
+      {prevEntry && (
+        <a
+          href={`/recipes/${prevEntry.id.split("/").pop()}`}
+          class="flex gap-2 p-4 rounded-lg border border-border hover:border-accent transition"
+        >
+          <span class="text-accent">←</span>
+          <div>
+            <span class="text-sm text-foreground/70">Previous</span>
+            <div class="font-semibold text-accent">{prevEntry.data.title}</div>
+          </div>
+        </a>
+      )}
+      {nextEntry && (
+        <a
+          href={`/recipes/${nextEntry.id.split("/").pop()}`}
+          class="flex gap-2 p-4 rounded-lg border border-border hover:border-accent transition sm:text-right sm:flex-row-reverse"
+        >
+          <span class="text-accent">→</span>
+          <div>
+            <span class="text-sm text-foreground/70">Next</span>
+            <div class="font-semibold text-accent">{nextEntry.data.title}</div>
+          </div>
+        </a>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline>
+  sessionStorage.setItem('backUrl', '/archives');
+</script>

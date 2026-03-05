@@ -10,10 +10,11 @@ interface Props {
   title: string;
   travel: CollectionEntry<"travel">[];
   reviews: CollectionEntry<"reviews">[];
+  recipes: CollectionEntry<"recipes">[];
   paintings: CollectionEntry<"paintings">[];
 }
 
-const { title, travel, reviews, paintings } = Astro.props;
+const { title, travel, reviews, recipes, paintings } = Astro.props;
 
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
@@ -29,8 +30,11 @@ const layoutProps = {
     <h1 class="inline-block text-2xl font-bold text-foreground sm:text-3xl mb-8">
       {title}
     </h1>
-
-    <!-- Travel Stories Section -->
+    <!-- Coming Soon -->
+    <section class="mb-12 p-6 border border-dashed border-border rounded-lg text-center">
+      <p class="text-foreground/70 italic">Travel stories and paintings sections are being updated. Check back soon!</p>
+    </section>
+    {/* Travel Stories Section - Hidden for now
     <section class="mb-12">
       <h2 class="text-2xl font-semibold text-foreground mb-6">Travel</h2>
       <ul class="space-y-4">
@@ -47,6 +51,7 @@ const layoutProps = {
         ))}
       </ul>
     </section>
+    */}
 
     <!-- Reviews Section -->
     <section class="mb-12">
@@ -71,7 +76,27 @@ const layoutProps = {
       </ul>
     </section>
 
-    <!-- Paintings Section -->
+    <!-- Recipes Section -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-foreground mb-6">Recipes</h2>
+      <ul class="space-y-4">
+        {recipes.map((entry) => (
+          <li class="border-b border-border pb-4">
+            <a href={`/recipes/${entry.id.split("/").pop()}`} class="block hover:opacity-75 transition">
+              <h3 class="text-lg font-semibold text-accent mb-1">{entry.data.title}</h3>
+              <div class="flex gap-4 text-sm text-foreground/70 mb-2">
+                {entry.data.prepTime && <span>Prep: {entry.data.prepTime}</span>}
+                {entry.data.cookTime && <span>Cook: {entry.data.cookTime}</span>}
+                {entry.data.servings && <span>Servings: {entry.data.servings}</span>}
+              </div>
+              <p class="text-foreground/80">{entry.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {/* Paintings Section - Hidden for now
     <section>
       <h2 class="text-2xl font-semibold text-foreground mb-6">Paintings</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -90,7 +115,6 @@ const layoutProps = {
       </div>
     </section>
 
-    <!-- Modal -->
     <div id="painting-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div class="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
         <img id="modal-image" src="" alt="Painting" class="max-w-full max-h-[90vh] object-contain" />
@@ -137,6 +161,7 @@ const layoutProps = {
         }
       });
     </script>
+    */}
   </main>
   <Footer />
 </Layout>

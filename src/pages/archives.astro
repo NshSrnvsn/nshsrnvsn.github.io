@@ -4,6 +4,7 @@ import ArchivesLayout from "@/layouts/ArchivesLayout.astro";
 
 const travel = await getCollection("travel", ({ data }) => !data.draft);
 const reviews = await getCollection("reviews", ({ data }) => !data.draft);
+const recipes = await getCollection("recipes", ({ data }) => !data.draft);
 const paintings = await getCollection("paintings", ({ data }) => !data.draft);
 
 // Sort by date descending
@@ -19,5 +20,6 @@ const sortByDate = (items: any[]) =>
   title="Archives"
   travel={sortByDate(travel)}
   reviews={sortByDate(reviews)}
+  recipes={sortByDate(recipes)}
   paintings={sortByDate(paintings)}
 />
