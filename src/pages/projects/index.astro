@@ -9,7 +9,7 @@ import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 
 const projects = await getCollection("projects", ({ data }) => !data.draft);
-const sortedProjects = getSortedPosts<"projects">(projects);
+const sortedProjects = projects.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
 ---
 
 <Layout title={`Projects | ${SITE.title}`}>

@@ -49,6 +49,7 @@ const projects = defineCollection({
       forks: z.number().optional(),
       license: z.string().optional(),
       readmeLink: z.string().optional(),
+      order: z.number().optional(),
     }),
 });
 

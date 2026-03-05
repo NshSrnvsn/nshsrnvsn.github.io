@@ -1,6 +1,7 @@
 ---
 author: Anusha Srinivasan
 title: Physics-Informed Neural Network to accurately deliver option prices and Greeks
+order: 2
 featured: false
 draft: false
 description: Generalizes across market regimes without retraining and delivers Greeks 70% faster than finite-difference methods
