@@ -47,12 +47,12 @@ draft: false
 - Cook on low-medium flame until the mixture becomes soft and the smell becomes irresistible. Turn off the stove.
 - Let the mixture cool down, then grind it as fine as possible.
 
-### Step 3: Bring It Together
+### Step 3: Assembly
 - Add 2-3 tbsp of butter to the pan and cook on low-medium flame.
 - Add the ground mixture, salt, and the all of the spices listed. Sauté for a couple of minutes.
 - Add Kasturi methi leaves and few tbsps of cream.
 - Add the air-fried chicken at the end, keep it on the stove for 1-2 minutes, and voilà, your butter chicken is ready!
 
-> I highly suggest adding 1-2 tbsp more butter in the end. You're welcome.
+> I highly suggest adding 1-2 tbsp more butter in the end.
 
 
