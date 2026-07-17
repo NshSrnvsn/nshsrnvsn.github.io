@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import crabSprite from 'src/assets/icons/crab.svg'
 import styles from './EdgeCrab.module.css'
 
