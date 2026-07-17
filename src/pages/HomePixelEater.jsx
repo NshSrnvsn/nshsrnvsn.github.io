@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './HomePixelEater.module.css'
+import crabSprite from "@/assets/icons/crab.svg";
 
 const CELL_SIZE = 22
 const BITE_RADIUS = 58
@@ -17,7 +18,7 @@ function wrapAngle(angle) {
   return result
 }
 
-export default function HomePixelEater({ active = true, spriteUrl = '/pacman.svg' }) {
+export default function HomePixelEater({ active = true }) {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function HomePixelEater({ active = true, spriteUrl = '/pacman.svg
     if (!context) return
 
     const sprite = new Image()
-    sprite.src = spriteUrl
+    sprite.src = crabSprite
 
     const state = {
       width: 0,
@@ -174,7 +175,7 @@ export default function HomePixelEater({ active = true, spriteUrl = '/pacman.svg
       window.removeEventListener('mousedown', onPointerMove)
       window.cancelAnimationFrame(rafId)
     }
-  }, [active, spriteUrl])
+  }, [active, crabSprite])
 
   if (!active) return null
 

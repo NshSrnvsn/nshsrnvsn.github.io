@@ -4,7 +4,7 @@ import styles from './EdgeCrab.module.css'
 
 const POSITIONS = [22, 68, 38, 80, 52]
 
-export default function EdgeCrab({ active = true, spriteUrl = '/pacman.svg'  }) {
+export default function EdgeCrab({ active = true }) {
   const [positionIndex, setPositionIndex] = useState(0)
 
   useEffect(() => {
