@@ -15,7 +15,7 @@ const sortedPosts = getSortedPosts(posts);
 
 <Layout title={`Blog | ${SITE.title}`}>
   <Header />
-  <EdgeCrab client:load spriteUrl="src/assets/icons/crab.svg" />
+  <EdgeCrab client:load />
   <Main pageTitle="Blog" pageDesc="Articles I've written">
     <ul>
       {sortedPosts.map(data => <Card {...data} />)}

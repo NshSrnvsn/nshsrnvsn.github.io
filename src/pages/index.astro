@@ -4,6 +4,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import HomePixelEater from 'src/pages/HomePixelEater.jsx';
+import crabSprite from "@/assets/icons/crab.svg";
 import { SOCIALS } from "@/constants";
 ---
 
@@ -13,7 +14,7 @@ import { SOCIALS } from "@/constants";
   <HomePixelEater 
     client:load 
     active={true} 
-    spriteUrl="src/assets/icons/crab.svg" 
+    spriteUrl={crabSprite} 
   />
 
   <main id="main-content" data-layout="index" class="app-layout">

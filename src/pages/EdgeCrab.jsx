@@ -22,7 +22,7 @@ export default function EdgeCrab({ active = true, spriteUrl = '/pacman.svg'  }) 
   return (
     <img
       className={styles.crab}
-      src={spriteUrl}
+      src={crabSprite}
       alt=""
       aria-hidden="true"
       style={{ top: `${POSITIONS[positionIndex]}vh` }}
