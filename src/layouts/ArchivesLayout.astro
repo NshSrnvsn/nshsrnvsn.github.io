@@ -5,6 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { SITE } from "@/config";
+import EdgeCrab from 'src/pages/EdgeCrab.jsx'
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ const layoutProps = {
 <Layout {...layoutProps}>
   <Header />
   <Breadcrumb />
+  <EdgeCrab client:load spriteUrl="src/assets/icons/crab.svg" />
   <main id="main-content" class="app-layout pb-12">
     <h1 class="inline-block text-2xl font-bold text-foreground sm:text-3xl mb-8">
       {title}

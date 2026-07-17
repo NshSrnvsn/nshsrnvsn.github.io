@@ -1,0 +1,98 @@
+---
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/layouts/Main.astro";
+import { SITE } from "@/config";
+import EdgeCrab from 'src/pages/EdgeCrab.jsx'
+
+// Generate a random color for the border
+const colors = [
+  "border-l-red-500",
+  "border-l-blue-500", 
+  "border-l-yellow-500",
+  "border-l-green-500",
+  "border-l-purple-500",
+  "border-l-pink-500",
+  "border-l-orange-500",
+  "border-l-teal-500",
+];
+
+const borderColor = colors[Math.floor(Math.random() * colors.length)];
+---
+
+<Layout title={`Guestbook | ${SITE.title}`} description="Leave a note, say hello, or sign the guestbook.">
+  <Header />
+  <EdgeCrab client:load spriteUrl="src/assets/icons/crab.svg" />
+  <Main pageTitle="Guestbook" pageDesc="Say hellooooo!">
+      <!-- Guestbook Script -->
+      <script async src="https://guestbooks.meadow.cafe/resources/js/embed_script/6423/script.js"></script>
+      <!-- Guestbook Form -->
+      <div id="guestbooks___guestbook-form-container">
+        <form id="guestbooks___guestbook-form"
+          action="https://guestbooks.meadow.cafe/guestbook/6423/submit"
+          method="post">
+          <div class="guestbooks___input-container">
+            <input type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              required>
+          </div>
+          <br/>
+          <div id="guestbooks___challenge-answer-container"></div>
+          <div class="guestbooks___input-container">
+            <textarea id="text"
+              name="text"
+              placeholder="Leave your message here..."
+              rows="4"
+              style="width: 100%; box-sizing: border-box; resize: vertical;"
+              required></textarea>
+          </div>
+          <br/>
+          <div id="guestbooks___pow-status"></div>
+            <div class={`relative border border-border rounded-lg bg-background hover:shadow-xl transition-all duration-300 ${borderColor} border-l-4 pl-0.5 w-1/5`}>
+              <button type="submit">Sign Guestbook</button>
+            </div>
+          <div id="guestbooks___error-message"></div>
+        </form>
+      </div>
+      <!-- Attribution (optional but appreciated!) -->
+      <div id="guestbooks___guestbook-made-with" style="text-align: right; margin-top: 10px;">
+        <small>Powered by <a href="https://guestbooks.meadow.cafe" target="_blank">Guestbooks</a></small>
+      </div>
+      <!-- Messages Section -->
+      <hr style="margin: 2em 0;"/>
+      <h3 id="guestbooks___guestbook-messages-header">Messages</h3>
+      <div id="guestbooks___guestbook-messages-container"></div>
+    </div>
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  :global(#name),
+  :global(#text) {
+    width: 100%;
+    border: 1.5px solid rgba(117, 179, 253, 0.45);
+    border-radius: 0.9rem;
+    background: rgba(168, 171, 177, 0.55);
+    padding: 0.9rem 1rem;
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease,
+      background-color 150ms ease;
+  }
+
+  :global(#name:focus),
+  :global(#text:focus) {
+    outline: none;
+    border-color: rgba(98, 153, 241, 0.75);
+    background: rgba(239, 246, 255, 0.85);
+    box-shadow: 0 0 0 4px rgba(170, 174, 178, 0.28);
+  }
+
+  :global(#guestbooks___guestbook-form .guestbooks___input-container + .guestbooks___input-container) {
+    margin-top: 0.9rem;
+  }
+</style>

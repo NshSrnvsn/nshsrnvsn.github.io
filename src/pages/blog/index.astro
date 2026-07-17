@@ -7,6 +7,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
+import EdgeCrab from 'src/pages/EdgeCrab.jsx'
 
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
@@ -14,10 +15,21 @@ const sortedPosts = getSortedPosts(posts);
 
 <Layout title={`Blog | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Blog" pageDesc="All the articles I've written.">
+  <EdgeCrab client:load spriteUrl="src/assets/icons/crab.svg" />
+  <Main pageTitle="Blog" pageDesc="Articles I've written">
     <ul>
       {sortedPosts.map(data => <Card {...data} />)}
     </ul>
+
+    <div class="substack-callout">
+    <h3>📬 Read my latest writing on [<a
+      href="https://substack.com/@nshsrnvsn/posts"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="underline"
+    >Substack</a>]</h3>
+
+  </div>
   </Main>
   <Footer />
 </Layout>

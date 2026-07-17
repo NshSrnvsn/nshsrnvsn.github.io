@@ -1,0 +1,24 @@
+.crab {
+  --crab-size: 112px;
+
+  position: fixed;
+  right: calc(var(--crab-size) * -0.45);
+  width: var(--crab-size);
+  height: var(--crab-size);
+  z-index: 450;
+  pointer-events: none;
+  object-fit: contain;
+  transform: translateY(-50%) rotate(8deg);
+  transform-origin: center;
+  opacity: 0.88;
+  filter: drop-shadow(0 12px 18px rgba(26, 26, 24, 0.18));
+  transition: top 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.45s ease,
+    opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .crab {
+    right: calc(var(--crab-size) * -0.48);
+  }
+}
