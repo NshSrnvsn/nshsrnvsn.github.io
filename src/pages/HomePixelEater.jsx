@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './HomePixelEater.module.css'
 
 const CELL_SIZE = 22
