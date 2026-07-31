@@ -1,0 +1,81 @@
+---
+type SpriteUrl = string | { src: string };
+
+type Props = {
+  active?: boolean;
+  spriteUrl?: SpriteUrl;
+};
+
+const POSITIONS = [22, 68, 38, 80, 52];
+const { active = true, spriteUrl = "/pacman.svg" } = Astro.props;
+const src = typeof spriteUrl === "string" ? spriteUrl : spriteUrl.src;
+---
+
+{
+  active && (
+    <img
+      class="edge-crab"
+      src={src}
+      alt=""
+      aria-hidden="true"
+      data-edge-crab
+      data-positions={POSITIONS.join(",")}
+      style={`top: ${POSITIONS[0]}vh;`}
+    />
+  )
+}
+
+<script>
+  const startEdgeCrabs = () => {
+    document.querySelectorAll("[data-edge-crab]").forEach(crab => {
+      if (!(crab instanceof HTMLImageElement)) return;
+      if (crab.dataset.edgeCrabInitialized) return;
+
+      const positions = (crab.dataset.positions ?? "")
+        .split(",")
+        .map(Number)
+        .filter(Number.isFinite);
+
+      if (!positions.length) return;
+
+      crab.dataset.edgeCrabInitialized = "true";
+      let positionIndex = 0;
+
+      window.setInterval(() => {
+        positionIndex = (positionIndex + 1) % positions.length;
+        crab.style.top = `${positions[positionIndex]}vh`;
+      }, 2000);
+    });
+  };
+
+  startEdgeCrabs();
+  document.addEventListener("astro:page-load", startEdgeCrabs);
+</script>
+
+<style>
+  .edge-crab {
+    --crab-size: 112px;
+
+    position: fixed;
+    right: calc(var(--crab-size) * -0.45);
+    width: var(--crab-size);
+    height: var(--crab-size);
+    z-index: 450;
+    pointer-events: none;
+    object-fit: contain;
+    transform: translateY(-50%) rotate(8deg);
+    transform-origin: center;
+    opacity: 0.88;
+    filter: drop-shadow(0 12px 18px rgba(26, 26, 24, 0.18));
+    transition:
+      top 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 0.45s ease,
+      opacity 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .edge-crab {
+      right: calc(var(--crab-size) * -0.48);
+    }
+  }
+</style>

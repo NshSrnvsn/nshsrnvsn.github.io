@@ -5,6 +5,7 @@ import IconBrandX from "@/assets/icons/IconBrandX.svg";
 import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
 import IconWhatsapp from "@/assets/icons/IconWhatsapp.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
+import IconSubstack from "@/assets/icons/IconEdit.svg";
 import { SITE } from "@/config";
 
 interface Social {
@@ -18,20 +19,26 @@ export const SOCIALS: Social[] = [
   {
     name: "GitHub",
     href: "https://github.com/NshSrnvsn",
-    linkTitle: `${SITE.title} on GitHub`,
+    linkTitle: `GitHub`,
     icon: IconGitHub,
   },
   {
     name: "LinkedIn",
     href: "https://linkedin.com/in/nsh-srnvsn",
-    linkTitle: `${SITE.title} on LinkedIn`,
+    linkTitle: `LinkedIn`,
     icon: IconLinkedin,
   },
   {
     name: "Mail",
     href: "mailto:anushasrinivasan9@gmail.com",
-    linkTitle: `Send an email to ${SITE.title}`,
+    linkTitle: `Email`,
     icon: IconMail,
+  },
+  {
+    name: "Substack",
+    href: "https://substack.com/@nshsrnvsn",
+    linkTitle: `Substack`,
+    icon: IconSubstack,
   },
 ] as const;
 
