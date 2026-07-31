@@ -14,10 +14,20 @@ const sortedPosts = getSortedPosts(posts);
 
 <Layout title={`Blog | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Blog" pageDesc="All the articles I've written.">
+  <Main pageTitle="Blog" pageDesc="Articles I've written">
     <ul>
       {sortedPosts.map(data => <Card {...data} />)}
     </ul>
+
+    <div class="substack-callout">
+    <h3>📬 Read my latest writing on [<a
+      href="https://substack.com/@nshsrnvsn/posts"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="underline"
+    >Substack</a>]</h3>
+
+  </div>
   </Main>
   <Footer />
 </Layout>
