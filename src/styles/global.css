@@ -5,12 +5,13 @@
 
 :root,
 html[data-theme="light"] {
-  --background: rgba(251, 246, 224);
+  --background: rgba(247, 239, 229);
   --foreground: #282728;
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
   --dot: rgb(40 39 40 / 12%);
+  --font-body: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, monospace;
 }
 
 html[data-theme="dark"] {
@@ -40,7 +41,8 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background text-foreground selection:bg-accent/75 selection:text-background;
+    font-family: var(--font-body);
     background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
     background-size: 24px 24px;
     background-attachment: fixed;
