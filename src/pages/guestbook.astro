@@ -4,7 +4,8 @@ import Footer from "@/components/Footer.astro";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 import { SITE } from "@/config";
-import EdgeCrab from 'src/pages/EdgeCrab.jsx'
+import EdgeCrab from "@/layouts/EdgeCrab.astro";
+import Crab from "@/assets/images/crab.png";
 
 // Generate a random color for the border
 const colors = [
@@ -23,7 +24,7 @@ const borderColor = colors[Math.floor(Math.random() * colors.length)];
 
 <Layout title={`Guestbook | ${SITE.title}`} description="Leave a note, say hello, or sign the guestbook.">
   <Header />
-  <EdgeCrab client:load />
+  <EdgeCrab spriteUrl={Crab} />
   <Main pageTitle="Guestbook" pageDesc="Say hellooooo!">
       <!-- Guestbook Script -->
       <script async src="https://guestbooks.meadow.cafe/resources/js/embed_script/6423/script.js"></script>
