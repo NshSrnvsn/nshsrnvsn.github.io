@@ -167,12 +167,6 @@
     display:block;
     margin-bottom:2px;
   }
-  .addr[contenteditable="true"]{
-    outline:none;
-    cursor:text;
-    border-bottom:1px dashed rgba(255,255,255,0.4);
-    padding-bottom:2px;
-  }
   .addr-to{
     left:20px;
     bottom:16px;
@@ -203,8 +197,8 @@
 
   /* ===================== CARD ===================== */
   .card-wrap{
-    width:340px;
-    height:440px;
+    width:420px;
+    height:620px;
     perspective:1600px;
     opacity:0;
     transform:translateY(40px) scale(0.9);
@@ -265,7 +259,6 @@
     font-size:23px;
     color:var(--ink);
     line-height:1.4;
-    outline:none;
     padding:6px 4px;
     border-bottom:1px dashed transparent;
     transition:border-color 0.2s ease;
@@ -289,7 +282,8 @@
     background:var(--cream);
     justify-content:flex-start;
     align-items:stretch;
-    padding:30px 30px 22px;
+    padding:32px 34px 24px;
+    overflow:hidden;
   }
   .card-back::before{
     content:'';
@@ -301,25 +295,19 @@
 
   .inner-message{
     flex:1;
+    min-height:0;
     width:100%;
     font-family:'Caveat', cursive;
-    font-size:26px;
-    line-height:1.55;
+    font-size:24px;
+    line-height:1.48;
     color:var(--ink);
-    outline:none;
-    resize:none;
-    overflow-y:auto;
-    overflow-x:hidden;
     white-space:pre-wrap;
     word-break:break-word;
-    overflow-wrap:anywhere;
-    padding:6px 2px 14px;
+    overflow-wrap:break-word;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:4px 2px 12px;
     scrollbar-width:thin;
-  }
-  .inner-message:empty::before{
-    content:attr(data-placeholder);
-    color:var(--ink-soft);
-    opacity:0.55;
   }
   .inner-message::-webkit-scrollbar{
     width:8px;
@@ -337,7 +325,6 @@
     font-size:22px;
     text-align:right;
     color:var(--ink-soft);
-    outline:none;
     padding:4px 2px;
     align-self:flex-end;
   }
@@ -356,13 +343,23 @@
     opacity:0.4;
   }
 
-  [contenteditable="true"]:focus{
-    background:rgba(255,255,255,0.35);
-  }
-
   @media (max-width:400px){
     .envelope-wrap{ width:88vw; height:190px; }
-    .card-wrap{ width:88vw; height:400px; }
+    .card-wrap{ width:92vw; height:620px; }
+    .card-back{
+      padding:24px 18px 18px;
+    }
+    .inner-message{
+      font-size:18px;
+      line-height:1.38;
+      padding:4px 0 8px;
+    }
+    .inner-signoff{
+      font-size:17px;
+    }
+    .front-caption{
+      font-size:19px;
+    }
   }
 </style>
 </head>
@@ -377,11 +374,11 @@
       <div class="env-body"></div>
       <div class="stamp"></div>
 
-      <div class="addr addr-from" contenteditable="true" spellcheck="false">
+      <div class="addr addr-from" spellcheck="false">
         <span class="lbl">From</span>Gundusha
       </div>
 
-      <div class="addr addr-to" contenteditable="true" spellcheck="false">
+      <div class="addr addr-to" spellcheck="false">
         <span class="lbl">To</span>my Jatito
       </div>
 
@@ -425,31 +422,22 @@
           <path d="M40 96 C 40 96, 45 100, 50 100 L 100 100 C 105 100, 110 96, 110 96 L 110 92 C 110 92, 100 96, 75 96 C 50 96, 40 92, 40 92 Z" fill="#D6AC85" stroke="#3A2E2C" stroke-opacity="0.4" stroke-width="1.2"/>
         </svg>
 
-        <div class="front-caption" contenteditable="true" spellcheck="false">for someone who means a lot</div>
+        <div class="front-caption" spellcheck="false">for the love of my life</div>
         <div class="tap-note">tap to open</div>
       </div>
 
       <div class="card-face card-back">
-        <div class="inner-message" contenteditable="true" spellcheck="false" data-placeholder="Growing up, I loved the idea of hitting lottery in your first love and living a happily ever after with them. Today when I realise that I won that lottery, it makes me feel full in my heart. Full of joy and happiness. 
+        <div class="inner-message" spellcheck="false">Growing up, I loved the idea of hitting lottery in your first love and living a happily ever after with them. Today when I realise that I won that lottery, it makes me feel full in my heart. Full of joy and happiness.
 
-You came as a breath of fresh air in my life, you came as a wish I asked for with those grapes. You’re my best friend. 
+You came as a breath of fresh air in my life, you came as a wish I asked for with those grapes. You’re my best friend.
 You make me feel the comfort and warmth that I feel only with my family. My inner child is happy around you ❤️
 
-Your smile brings me joy and I want to create more instances to make your smile a constant. I don’t say this enough, but I appreciate all that you do for me. I can’t imagine a life without you now. You’re mine until death do us apart. 
+Your smile brings me joy and I want to create more instances to make your smile a constant. I don’t say this enough, but I appreciate all that you do for me. I can’t imagine a life without you now. You’re mine until death do us apart.
 
-Thanks you for never giving up on us.Thank you for making me smile, laugh and cry.
+Thanks you for never giving up on us. Thank you for making me smile, laugh and cry.
 
-You’re my love forever! ❤️ Growing up, I loved the idea of hitting lottery in your first love and living a happily ever after with them. Today when I realise that I won that lottery, it makes me feel full in my heart. Full of joy and happiness. 
-
-You came as a breath of fresh air in my life, you came as a wish I asked for with those grapes. You’re my best friend. 
-You make me feel the comfort and warmth that I feel only with my family. My inner child is happy around you ❤️
-
-Your smile brings me joy and I want to create more instances to make your smile a constant. I don’t say this enough, but I appreciate all that you do for me. I can’t imagine a life without you now. You’re mine until death do us apart. 
-
-Thanks you for never giving up on us.Thank you for making me smile, laugh and cry.
-
-You’re my love forever! ❤️"></div>
-        <div class="inner-signoff" contenteditable="true" spellcheck="false">— with love</div>
+You’re my love forever! ❤️</div>
+  <div class="inner-signoff" spellcheck="false">— with love</div>
         <div class="back-hint">tap to close</div>
       </div>
 
