@@ -4,7 +4,7 @@ export const SITE = {
   profile: "",
   desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
   title: "NshSrnvsn",
-  ogImage: "file.jpg",
+  ogImage: "profile.png",
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 4,
