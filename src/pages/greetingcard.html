@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A little something for you</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #F6EFE3;
+    --cream-deep: #EFE4D0;
+    --envelope: #C89A76;
+    --envelope-dark: #B4855E;
+    --envelope-flap: #D6AC85;
+    --ink: #3A2E2C;
+    --ink-soft: #6B5B54;
+    --sage: #7C8B6F;
+    --sage-dark: #56634B;
+    --rose: #C97B84;
+    --rose-dark: #A85862;
+    --paper-line: rgba(58,46,44,0.14);
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.5), transparent 40%),
+      var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 16px;
+    font-family:'Jost', sans-serif;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .hint{
+    font-family:'Caveat', cursive;
+    font-size:22px;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+    text-align:center;
+    letter-spacing:0.3px;
+    transition:opacity 0.4s ease;
+  }
+  .hint.hidden{opacity:0;height:0;margin:0;overflow:hidden;}
+
+  /* ===================== ENVELOPE ===================== */
+  .envelope-wrap{
+    position:relative;
+    width:340px;
+    height:230px;
+    perspective:1400px;
+  }
+  .envelope-wrap.gone{ display:none; }
+
+  .envelope{
+    position:absolute;
+    inset:0;
+    cursor:pointer;
+  }
+
+  .env-shadow{
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:-14px;
+    height:20px;
+    background:radial-gradient(ellipse at center, rgba(58,46,44,0.25), transparent 70%);
+    filter:blur(2px);
+  }
+
+  .env-body{
+    position:absolute;
+    inset:0;
+    background:var(--envelope);
+    border-radius:6px;
+    box-shadow: 0 10px 24px rgba(58,46,44,0.18);
+  }
+
+  .env-pocket-left, .env-pocket-right, .env-pocket-bottom{
+    position:absolute;
+    background:var(--envelope-dark);
+  }
+  .env-pocket-bottom{
+    left:0; right:0; bottom:0; height:60%;
+    clip-path:polygon(0 100%, 100% 100%, 100% 0, 50% 45%, 0 0);
+    background:var(--envelope-dark);
+    border-radius:0 0 6px 6px;
+  }
+
+  .env-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:60%;
+    background:var(--envelope-flap);
+    clip-path:polygon(0 0, 100% 0, 50% 78%);
+    transform-origin:top center;
+    transform-style:preserve-3d;
+    transition:transform 0.9s cubic-bezier(.6,-0.15,.2,1.2);
+    z-index:5;
+    border-radius:6px 6px 0 0;
+  }
+  .env-flap::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(160deg, rgba(255,255,255,0.18), transparent 60%);
+  }
+
+  .envelope.open .env-flap{
+    transform:rotateX(178deg);
+    z-index:1;
+  }
+
+  .seal{
+    position:absolute;
+    top:38%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:var(--rose);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 6px rgba(58,46,44,0.35), inset 0 2px 3px rgba(255,255,255,0.25), inset 0 -3px 4px rgba(0,0,0,0.2);
+    z-index:6;
+    transition:transform 0.35s ease, opacity 0.35s ease;
+  }
+  .seal svg{ width:26px; height:26px; }
+  .envelope.open .seal{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.4);
+    pointer-events:none;
+  }
+
+  .addr{
+    position:absolute;
+    font-family:'Caveat', cursive;
+    color:#fff;
+    z-index:4;
+    line-height:1.35;
+  }
+  .addr .lbl{
+    font-family:'Jost', sans-serif;
+    font-size:9px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    opacity:0.75;
+    display:block;
+    margin-bottom:2px;
+  }
+  .addr[contenteditable="true"]{
+    outline:none;
+    cursor:text;
+    border-bottom:1px dashed rgba(255,255,255,0.4);
+    padding-bottom:2px;
+  }
+  .addr-to{
+    left:20px;
+    bottom:16px;
+    font-size:20px;
+    max-width:160px;
+  }
+  .addr-from{
+    right:20px;
+    top:16px;
+    font-size:16px;
+    text-align:right;
+    max-width:140px;
+    opacity:0.92;
+  }
+
+  .stamp{
+    position:absolute;
+    top:14px;
+    left:18px;
+    width:44px;
+    height:54px;
+    background:repeating-linear-gradient(45deg, var(--sage) 0 4px, var(--sage-dark) 4px 8px);
+    border:3px dotted rgba(255,255,255,0.6);
+    border-radius:2px;
+    z-index:4;
+    opacity:0.9;
+  }
+
+  /* ===================== CARD ===================== */
+  .card-wrap{
+    width:340px;
+    height:440px;
+    perspective:1600px;
+    opacity:0;
+    transform:translateY(40px) scale(0.9);
+    transition:opacity 0.7s ease 0.15s, transform 0.7s cubic-bezier(.2,.8,.2,1) 0.15s;
+    margin-top:0;
+  }
+  .card-wrap.visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    cursor:pointer;
+    transform-style:preserve-3d;
+    transition:transform 1s cubic-bezier(.6,-0.1,.2,1.1);
+  }
+  .card.flipped{ transform:rotateY(180deg); }
+
+  .card-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:4px;
+    background:var(--cream-deep);
+    box-shadow:0 18px 36px rgba(58,46,44,0.22), 0 2px 8px rgba(58,46,44,0.12);
+    border:1px solid var(--paper-line);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:34px 26px;
+  }
+
+  .card-front{
+    justify-content:space-between;
+  }
+  .card-front::before{
+    content:'';
+    position:absolute;
+    inset:10px;
+    border:1px solid var(--paper-line);
+    pointer-events:none;
+  }
+
+  .vase-illustration{
+    width:150px;
+    height:170px;
+    margin-top:18px;
+  }
+
+  .front-caption{
+    width:100%;
+    text-align:center;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:23px;
+    color:var(--ink);
+    line-height:1.4;
+    outline:none;
+    padding:6px 4px;
+    border-bottom:1px dashed transparent;
+    transition:border-color 0.2s ease;
+    margin-bottom:6px;
+  }
+  .front-caption:hover, .front-caption:focus{
+    border-bottom:1px dashed var(--ink-soft);
+  }
+
+  .tap-note{
+    font-family:'Jost', sans-serif;
+    font-size:10px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.55;
+  }
+
+  .card-back{
+    transform:rotateY(180deg);
+    background:var(--cream);
+    justify-content:flex-start;
+    align-items:stretch;
+    padding:30px 30px 22px;
+  }
+  .card-back::before{
+    content:'';
+    position:absolute;
+    inset:8px;
+    border:1px solid var(--paper-line);
+    pointer-events:none;
+  }
+
+  .inner-message{
+    flex:1;
+    width:100%;
+    font-family:'Caveat', cursive;
+    font-size:26px;
+    line-height:1.55;
+    color:var(--ink);
+    outline:none;
+    resize:none;
+    overflow-y:auto;
+    padding:6px 2px;
+  }
+  .inner-message:empty::before{
+    content:attr(data-placeholder);
+    color:var(--ink-soft);
+    opacity:0.55;
+  }
+
+  .inner-signoff{
+    font-family:'Caveat', cursive;
+    font-size:22px;
+    text-align:right;
+    color:var(--ink-soft);
+    outline:none;
+    padding:4px 2px;
+    align-self:flex-end;
+  }
+
+  .back-hint{
+    position:absolute;
+    bottom:8px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-family:'Jost', sans-serif;
+    font-size:9px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0.4;
+  }
+
+  [contenteditable="true"]:focus{
+    background:rgba(255,255,255,0.35);
+  }
+
+  @media (max-width:400px){
+    .envelope-wrap{ width:88vw; height:190px; }
+    .card-wrap{ width:88vw; height:400px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="hint" id="hint">tap the seal to open your letter</div>
+
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="env-shadow"></div>
+    <div class="envelope" id="envelope">
+      <div class="env-body"></div>
+      <div class="stamp"></div>
+
+      <div class="addr addr-from" contenteditable="true" spellcheck="false">
+        <span class="lbl">From</span>Gundusha
+      </div>
+
+      <div class="addr addr-to" contenteditable="true" spellcheck="false">
+        <span class="lbl">To</span>my Jatito
+      </div>
+
+      <div class="env-pocket-bottom"></div>
+      <div class="env-flap">
+        <div class="seal">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 20c-4-3-8-6.2-8-10.4C4 6.5 6.2 4.5 9 4.5c1.4 0 2.6.6 3 1.7.4-1.1 1.6-1.7 3-1.7 2.8 0 5 2 5 5.1C20 13.8 16 17 12 20z" fill="#fff" opacity="0.9"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-wrap" id="cardWrap">
+    <div class="card" id="card">
+
+      <div class="card-face card-front">
+        <svg class="vase-illustration" viewBox="0 0 150 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M75 95 C 75 75, 55 70, 50 45 C 47 30, 55 18, 60 20 C 58 32, 66 40, 72 45" stroke="#56634B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="60" cy="19" rx="9" ry="6" fill="#C97B84" transform="rotate(-20 60 19)"/>
+          <ellipse cx="52" cy="14" rx="7" ry="5" fill="#D6939C" transform="rotate(10 52 14)"/>
+          <ellipse cx="68" cy="13" rx="7" ry="5" fill="#E3AEB4" transform="rotate(-35 68 13)"/>
+          <circle cx="60" cy="18" r="3" fill="#A85862"/>
+
+          <path d="M75 95 C 75 70, 92 65, 95 40 C 96 28, 90 18, 85 21 C 87 32, 80 40, 75 46" stroke="#7C8B6F" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="86" cy="19" rx="8" ry="5.5" fill="#E3AEB4" transform="rotate(25 86 19)"/>
+          <ellipse cx="93" cy="14" rx="6" ry="4.5" fill="#C97B84" transform="rotate(-5 93 14)"/>
+          <circle cx="87" cy="18" r="2.6" fill="#A85862"/>
+
+          <path d="M75 95 C 75 80, 75 60, 75 35" stroke="#56634B" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <path d="M75 60 C 68 58, 62 62, 60 68" stroke="#56634B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M75 50 C 82 48, 88 52, 90 58" stroke="#56634B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="75" cy="33" rx="10" ry="7" fill="#C97B84" transform="rotate(4 75 33)"/>
+          <ellipse cx="66" cy="30" rx="7" ry="5" fill="#D6939C" transform="rotate(-20 66 30)"/>
+          <ellipse cx="84" cy="30" rx="7" ry="5" fill="#D6939C" transform="rotate(20 84 30)"/>
+          <circle cx="75" cy="32" r="3" fill="#A85862"/>
+
+          <path d="M40 96 C 40 96, 45 100, 50 100 L 100 100 C 105 100, 110 96, 110 96 L 112 140 C 112 148, 100 155, 75 155 C 50 155, 38 148, 38 140 Z" fill="#EFE4D0" stroke="#3A2E2C" stroke-opacity="0.5" stroke-width="1.4"/>
+          <path d="M42 108 C 60 112, 90 112, 108 108" stroke="#3A2E2C" stroke-opacity="0.25" stroke-width="1.2" fill="none"/>
+          <path d="M40 96 C 40 96, 45 100, 50 100 L 100 100 C 105 100, 110 96, 110 96 L 110 92 C 110 92, 100 96, 75 96 C 50 96, 40 92, 40 92 Z" fill="#D6AC85" stroke="#3A2E2C" stroke-opacity="0.4" stroke-width="1.2"/>
+        </svg>
+
+        <div class="front-caption" contenteditable="true" spellcheck="false">for someone who means a lot</div>
+        <div class="tap-note">tap to open</div>
+      </div>
+
+      <div class="card-face card-back">
+        <div class="inner-message" contenteditable="true" spellcheck="false" data-placeholder="Growing up, I loved the idea of hitting lottery in your first love and living a happily ever after with them. Today when I realise that I won that lottery, it makes me feel full in my heart. Full of joy and happiness. 
+
+You came as a breath of fresh air in my life, you came as a wish I asked for with those grapes. You’re my best friend. 
+You make me feel the comfort and warmth that I feel only with my family. My inner child is happy around you ❤️
+
+Your smile brings me joy and I want to create more instances to make your smile a constant. I don’t say this enough, but I appreciate all that you do for me. I can’t imagine a life without you now. You’re mine until death do us apart. 
+
+Thanks you for never giving up on us.Thank you for making me smile, laugh and cry.
+
+You’re my love forever! ❤️ Growing up, I loved the idea of hitting lottery in your first love and living a happily ever after with them. Today when I realise that I won that lottery, it makes me feel full in my heart. Full of joy and happiness. 
+
+You came as a breath of fresh air in my life, you came as a wish I asked for with those grapes. You’re my best friend. 
+You make me feel the comfort and warmth that I feel only with my family. My inner child is happy around you ❤️
+
+Your smile brings me joy and I want to create more instances to make your smile a constant. I don’t say this enough, but I appreciate all that you do for me. I can’t imagine a life without you now. You’re mine until death do us apart. 
+
+Thanks you for never giving up on us.Thank you for making me smile, laugh and cry.
+
+You’re my love forever! ❤️"></div>
+        <div class="inner-signoff" contenteditable="true" spellcheck="false">— with love</div>
+        <div class="back-hint">tap to close</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const envelope = document.getElementById('envelope');
+  const envelopeWrap = document.getElementById('envelopeWrap');
+  const cardWrap = document.getElementById('cardWrap');
+  const card = document.getElementById('card');
+  const hint = document.getElementById('hint');
+
+  let opened = false;
+  envelope.addEventListener('click', (e) => {
+    if(e.target.closest('[contenteditable]')) return;
+    if(opened) return;
+    opened = true;
+    envelope.classList.add('open');
+    hint.textContent = 'tap the card to read it';
+    setTimeout(() => {
+      cardWrap.classList.add('visible');
+    }, 500);
+    setTimeout(() => {
+      envelopeWrap.classList.add('gone');
+    }, 900);
+  });
+
+  card.addEventListener('click', (e) => {
+    if(e.target.closest('[contenteditable]')) return;
+    card.classList.toggle('flipped');
+    hint.classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
