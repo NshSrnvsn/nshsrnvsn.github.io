@@ -309,12 +309,27 @@
     outline:none;
     resize:none;
     overflow-y:auto;
-    padding:6px 2px;
+    overflow-x:hidden;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow-wrap:anywhere;
+    padding:6px 2px 14px;
+    scrollbar-width:thin;
   }
   .inner-message:empty::before{
     content:attr(data-placeholder);
     color:var(--ink-soft);
     opacity:0.55;
+  }
+  .inner-message::-webkit-scrollbar{
+    width:8px;
+  }
+  .inner-message::-webkit-scrollbar-thumb{
+    background:rgba(58,46,44,0.2);
+    border-radius:999px;
+  }
+  .inner-message::-webkit-scrollbar-track{
+    background:transparent;
   }
 
   .inner-signoff{
