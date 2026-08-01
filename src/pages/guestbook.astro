@@ -6,93 +6,143 @@ import Main from "@/layouts/Main.astro";
 import { SITE } from "@/config";
 import EdgeCrab from "@/layouts/EdgeCrab.astro";
 import Crab from "@/assets/images/crab.png";
-
-// Generate a random color for the border
-const colors = [
-  "border-l-red-500",
-  "border-l-blue-500", 
-  "border-l-yellow-500",
-  "border-l-green-500",
-  "border-l-purple-500",
-  "border-l-pink-500",
-  "border-l-orange-500",
-  "border-l-teal-500",
-];
-
-const borderColor = colors[Math.floor(Math.random() * colors.length)];
 ---
 
 <Layout title={`Guestbook | ${SITE.title}`} description="Leave a note, say hello, or sign the guestbook.">
   <Header />
   <EdgeCrab spriteUrl={Crab} />
-  <Main pageTitle="Guestbook" pageDesc="Say hellooooo!">
-      <!-- Guestbook Script -->
+  <Main pageTitle="Guestbook" pageDesc="Leave a note, say helloooo, or sign the guestbook.">
+    <section class="guestbook-panel">
       <script async src="https://guestbooks.meadow.cafe/resources/js/embed_script/6423/script.js"></script>
-      <!-- Guestbook Form -->
+
       <div id="guestbooks___guestbook-form-container">
-        <form id="guestbooks___guestbook-form"
+        <form
+          id="guestbooks___guestbook-form"
           action="https://guestbooks.meadow.cafe/guestbook/6423/submit"
-          method="post">
+          method="post"
+        >
           <div class="guestbooks___input-container">
-            <input type="text"
+            <input
+              type="text"
               id="name"
               name="name"
               placeholder="Your Name"
-              required>
+              required
+            >
           </div>
-          <br/>
           <div id="guestbooks___challenge-answer-container"></div>
           <div class="guestbooks___input-container">
-            <textarea id="text"
+            <textarea
+              id="text"
               name="text"
               placeholder="Leave your message here..."
               rows="4"
-              style="width: 100%; box-sizing: border-box; resize: vertical;"
-              required></textarea>
+              required
+            ></textarea>
           </div>
-          <br/>
           <div id="guestbooks___pow-status"></div>
-            <div class={`relative border border-border rounded-lg bg-background hover:shadow-xl transition-all duration-300 ${borderColor} border-l-4 pl-0.5 w-1/5`}>
-              <button type="submit">Sign Guestbook</button>
-            </div>
+          <div class="guestbook-actions">
+            <button type="submit">Sign Guestbook</button>
+          </div>
           <div id="guestbooks___error-message"></div>
         </form>
       </div>
-      <!-- Attribution (optional but appreciated!) -->
-      <div id="guestbooks___guestbook-made-with" style="text-align: right; margin-top: 10px;">
-        <small>Powered by <a href="https://guestbooks.meadow.cafe" target="_blank">Guestbooks</a></small>
+
+      <div id="guestbooks___guestbook-made-with" class="guestbook-attribution">
+        <small>Powered by <a href="https://guestbooks.meadow.cafe" target="_blank" rel="noopener noreferrer">Guestbooks</a></small>
       </div>
-      <!-- Messages Section -->
-      <hr style="margin: 2em 0;"/>
-      <h3 id="guestbooks___guestbook-messages-header">Messages</h3>
-      <div id="guestbooks___guestbook-messages-container"></div>
+
+      <h3 id="guestbooks___guestbook-messages-header" class="guestbook-heading">Messages</h3>
+      <div id="guestbooks___guestbook-messages-container" class="guestbook-messages"></div>
+    </section>
   </Main>
   <Footer />
 </Layout>
 
 <style>
+  .guestbook-panel {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+
   :global(#name),
   :global(#text) {
     width: 100%;
-    border: 1.5px solid rgba(117, 179, 253, 0.45);
-    border-radius: 0.9rem;
-    background: rgba(168, 171, 177, 0.55);
-    padding: 0.9rem 1rem;
-    transition:
-      border-color 150ms ease,
-      box-shadow 150ms ease,
-      background-color 150ms ease;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--background);
+    color: var(--foreground);
+    padding: 0.95rem 1rem;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
   }
 
   :global(#name:focus),
   :global(#text:focus) {
     outline: none;
-    border-color: rgba(98, 153, 241, 0.75);
-    background: rgba(239, 246, 255, 0.85);
-    box-shadow: 0 0 0 4px rgba(170, 174, 178, 0.28);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+
+  :global(#text) {
+    resize: vertical;
+    min-height: 9rem;
   }
 
   :global(#guestbooks___guestbook-form .guestbooks___input-container + .guestbooks___input-container) {
-    margin-top: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .guestbook-actions {
+    margin-top: 1rem;
+  }
+
+  .guestbook-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--background);
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    padding: 0.7rem 1rem;
+    transition: border-color 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  }
+
+  .guestbook-actions button:hover,
+  .guestbook-actions button:focus-visible {
+    border-color: var(--accent);
+    color: color-mix(in srgb, var(--accent) 72%, var(--background));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+
+  .guestbook-actions button:active {
+    transform: translateY(1px);
+  }
+
+  .guestbook-attribution {
+    margin-top: 1rem;
+    text-align: right;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  }
+
+  .guestbook-heading {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  .guestbook-messages {
+    margin-top: 0.75rem;
+  }
+
+  :global(#guestbooks___error-message),
+  :global(#guestbooks___pow-status),
+  :global(#guestbooks___challenge-answer-container) {
+    margin-top: 0.75rem;
+    color: color-mix(in srgb, var(--foreground) 72%, transparent);
   }
 </style>

@@ -1,11 +1,9 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
 import EdgeCrab from "@/layouts/EdgeCrab.astro";
 import Crab from "@/assets/images/crab.png";
@@ -18,9 +16,26 @@ const sortedProjects = projects.sort((a, b) => (a.data.order ?? 999) - (b.data.o
   <Header />
   <EdgeCrab spriteUrl={Crab} />
   <Main pageTitle="Projects" pageDesc="Some Things I've Built">
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sortedProjects.map(project => <ProjectCard {...project} />)}
-    </ul>
+    <ol class="timeline timeline--projects mt-10" aria-label="Projects">
+      {sortedProjects.map((project, idx) => (
+        <li class="post-row" style={`--i: ${idx}`}>
+          <a
+            class="post"
+            href={project.data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="post-rail" aria-hidden="true">
+              <span class="post-dot" />
+            </div>
+            <div class="post-body">
+              <h2 class="post-title">{project.data.title}</h2>
+              <p class="post-preview">{project.data.description}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
   </Main>
   <Footer />
 </Layout>
